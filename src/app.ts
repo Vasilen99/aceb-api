@@ -1,20 +1,28 @@
-import Fastify from 'fastify'
-import usersRoutes from './routes/user.js'
+import Fastify from "fastify";
+import userRoutes from "./modules/users/routes.js";
+import authRoutes from "./modules/auth/routes.js";
+import healthRoutes from "./routes/health.js";
 
 export function buildApp() {
   const app = Fastify({
-    logger: true
-  })
+    logger: true,
+  });
 
-  app.get('/health', async () => {
-    return {
-      status: 'ok'
-    }
-  })
+  app.get("/health", async () => ({
+    status: "ok",
+  }));
 
-  app.register(usersRoutes, {
-    prefix: '/api/users'
-  })
+  app.register(healthRoutes, {
+    prefix: "/api/v1/health",
+  });
 
-  return app
+  app.register(userRoutes, {
+    prefix: "/api/v1/users",
+  });
+
+  app.register(authRoutes, {
+    prefix: "/api/v1/auth",
+  });
+
+  return app;
 }
