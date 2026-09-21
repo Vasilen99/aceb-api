@@ -1,4 +1,4 @@
-import { z } from 'zod'
+import { z } from "zod";
 
 export const signUpSchema = z.object({
   email: z
@@ -6,11 +6,8 @@ export const signUpSchema = z.object({
     .email()
     .transform((value) => value.toLowerCase()),
 
-  password: z
-    .string()
-    .min(8)
-    .max(128),
-})
+  password: z.string().min(6).max(128),
+});
 
 export const signInSchema = z.object({
   email: z
@@ -18,13 +15,9 @@ export const signInSchema = z.object({
     .email()
     .transform((value) => value.toLowerCase()),
 
-  password: z
-    .string()
-    .min(1),
-})
+  password: z.string().min(1),
+});
 
-export type SignUpInput =
-  z.infer<typeof signUpSchema>
+export type SignUpInput = z.infer<typeof signUpSchema>;
 
-export type SignInInput =
-  z.infer<typeof signInSchema>
+export type SignInInput = z.infer<typeof signInSchema>;
